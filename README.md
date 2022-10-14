@@ -1,5 +1,5 @@
 # Base_Script
-Base script for the creation of a job
+A Job base for FiveM 
 
 # Personalisation
 Before begining anything, you should modify the config.lua file and client/main.lua to you liking
