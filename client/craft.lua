@@ -78,32 +78,35 @@ Citizen.CreateThread(function()
         if Config.Crafting then
             local sleep = 1000
             local xPlayer = ESX.GetPlayerData(PlayerPedId())
+            local job = xPlayer.job.name
             local coords = GetEntityCoords(PlayerPedId())
 
             
             local distance = #(coords - Config.CraftingPos)
             local x, y, z = table.unpack(Config.CraftingPos)
 
-            if distance < Config.DrawDistance then
-                sleep = 5
-                DrawMarker(Config.MarkerType, x, y, z - 1, 0.0, 0.0, 0.0, 0, 0.0, 0.0, Config.MarkerSize.x, Config.MarkerSize.y, Config.MarkerSize.z, Config.MarkerColor.r, Config.MarkerColor.g, Config.MarkerColor.b, 100, false, true, 2, false, false, false, false)
-                if distance <= Config.MarkerSize.x then
-                    inZone = true
-                else
-                    inZone = false
+            if job == Config.Job then
+                if distance < Config.DrawDistance then
+                    sleep = 5
+                    DrawMarker(Config.MarkerType, x, y, z - 1, 0.0, 0.0, 0.0, 0, 0.0, 0.0, Config.MarkerSize.x, Config.MarkerSize.y, Config.MarkerSize.z, Config.MarkerColor.r, Config.MarkerColor.g, Config.MarkerColor.b, 100, false, true, 2, false, false, false, false)
+                    if distance <= Config.MarkerSize.x then
+                        inZone = true
+                    else
+                        inZone = false
+                    end
                 end
-            end
 
-            if inZone then
-                ESX.ShowHelpNotification(_U("open_menu_help"))
-                if IsControlJustReleased(1, 38) then
-                    menuOpen = true
-                    OpenCraftMenu()
-                end
-            else
-                if menuOpen == true then
-                    menuOpen = false
-                    ESX.UI.Menu.CloseAll()
+                if inZone then
+                    ESX.ShowHelpNotification(_U("open_menu_help"))
+                    if IsControlJustReleased(1, 38) then
+                        menuOpen = true
+                        OpenCraftMenu()
+                    end
+                else
+                    if menuOpen == true then
+                        menuOpen = false
+                        ESX.UI.Menu.CloseAll()
+                    end
                 end
             end
             Citizen.Wait(sleep)

@@ -13,6 +13,15 @@ Config.Name = GetCurrentResourceName()
 Config.Crafting = true -- defines if crafting is enabled or not (true/false)
 Config.CraftingPos = vector3(0.0, 0.0, 0.0) -- defines where the crafting menu is located
 
+Config.Blip = {
+    Pos = {x = 441.1524, y = -981.8430, z = 30.6896}, --defines where the blip is located
+    Sprite = 60, -- define the sprite used by the blip (see https://docs.fivem.net/docs/game-references/blips/#blips for references)
+    Color = 29, -- defines the color of the blip (see https://docs.fivem.net/docs/game-references/blips/#blip-colors for references)
+    Display = 4, -- defines the display parameter of the blip (0 and 1 doesn't show the blip // 2 is on minimap and map // 4 is only on map // 5 is only on minimap)
+    Scale = 1.0, -- defines the scale of the blip (default value when not indicated is 1.0)
+    Text = "LSPD", -- defines what the blip should be named
+}
+
 -- Defines the zones for specific action/menus
 Config.Zones = {
     {

@@ -15,6 +15,21 @@ AddEventHandler('esx:setJob', function(job)
 end)
 -- End of initialisation
 
+
+-- Blips function
+Citizen.CreateThread(function()
+    local baseBlip = AddBlipForCoord(Config.Blip.Pos.x, Config.Blip.Pos.y, Config.Blip.Pos.z)
+    SetBlipSprite(baseBlip, Config.Blip.Sprite)
+    SetBlipDisplay(baseBlip, Config.Blip.Display)
+    SetBlipScale(baseBlip, Config.Blip.Scale)
+    SetBlipAsShortRange(baseBlip, true)
+    SetBlipColour(baseBlip, Config.Blip.Color)
+    BeginTextCommandSetBlipName("STRING")
+    AddTextComponentSubstringPlayerName(Config.Blip.Text)
+    EndTextCommandSetBlipName(baseBlip)
+end)
+-- end of blip function
+
 -- Cloakrooms
 function OpenCloakroomMenu()
     ESX.UI.Menu.CloseAll()
@@ -63,11 +78,12 @@ Citizen.CreateThread(function()
                         sleep = 5
                         DrawMarker(Config.MarkerType, x, y, z - 1, 0.0, 0.0, 0.0, 0, 0.0, 0.0, Config.MarkerSize.x, Config.MarkerSize.y, Config.MarkerSize.z, Config.MarkerColor.r, Config.MarkerColor.g, Config.MarkerColor.b, 100, false, true, 2, false, false, false, false)
                         if distance <= Config.MarkerSize.x then
-                            currentZone = v.Name
-                            inZone = true
-                        else
-                            currentZone = nil
-                            inZone = false
+                            ESX.ShowHelpNotification(_U("open_menu_help"))
+                            if IsControlJustReleased(1, 38) then
+                                TriggerEvent('esx_society:openBossMenu', Config.Job, function(data, menu)
+                                    menu.close()
+                                end, { wash = false })
+                            end
                         end
                     elseif v.Name ~= "boss" then
                         sleep = 5
